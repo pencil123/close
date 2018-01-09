@@ -1,0 +1,15 @@
+mail_recive:
+    - recive1@mail.com
+    - recive2@mail.com
+
+dir_backup:
+    - {name:discuz_codes,path:/www/discuz}
+    - {name:wordpress_codes,path:/www/wordpress}
+    
+mysql_backup:
+    - {name:discuz_sql,database:discuz}
+    - {name:wordpress_codes,database:wordpress}
+
+compress:
+    size_bag: 1024k
+    password: password
