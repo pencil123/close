@@ -5,14 +5,13 @@ import zipfile
 import os
 
 class compress(object):
-	@staticmethod
-	def doit(srcpath,dstname,password='',compress_level=3):
+	def doit(self,srcpath,dstname,password='',compress_level=3):
 		'''initialization object'''
 		if os.path.exists(srcpath) is False:
-			print srcpath
 			print "source file not exist!"
 			return False
-		
+
+		dstname = "/tmp/" + dstname + ".zip"
 		if os.path.exists(dstname):
 			print "dst file is exist!"
 			return False
@@ -22,6 +21,7 @@ class compress(object):
 			os.makedirs(os.path.dirname(dstname))
 
 		self.compress_withpw(srcpath,dstname,password,compress_level)
+		return dstname
 
 	def compress_withpw(self,srcpath,dstname,password='',compress_level=3):
 		'''加密压缩'''
@@ -60,8 +60,6 @@ class compress(object):
 		zipHandler=zipfile.ZipFile(dstname,'w')
 		for dirpath,dirs,files in os.walk(srcpath):
 			for filename in files:
-				zipHandler.write(os.path.join(dirpath,filename))
+				absfilename = os.path.relpath(os.path.join(dirpath,filename),srcpath)
+				zipHandler.write(os.path.join(dirpath,filename),absfilename)
 		zipHandler.close()
-
-
-#compress_withpw("/root/compress",'/root/hello/123.zip','')

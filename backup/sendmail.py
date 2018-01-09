@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: UTF-8 -*-
 import types
-
+import os
 import smtplib
 import email.mime.multipart
 import email.mime.application
@@ -59,7 +59,7 @@ class SendMailDIY(object):
 		'''add mail attachment'''
 		if isinstance(filename,types.StringType):
 			msg_attach = email.mime.application.MIMEApplication(open(filename,'rb').read())
-			msg_attach.add_header('Content-Disposition', 'attachment', filename=filename)
+			msg_attach.add_header('Content-Disposition', 'attachment', filename=os.path.basename(filename))
 			self.msg.attach(msg_attach)
 			return True
 		if isinstance(filename,types.ListType):
@@ -69,17 +69,5 @@ class SendMailDIY(object):
 
 	def perform(self):
 		'''send mail'''
-		if self.login is False:
-			self.anonymous()
-
 		self.smtp.sendmail(self.mail_from,self.mailto,str(self.msg))
-
 		self.smtp.quit()
-
-# handler = mail()
-# handler.login_gmail("user@gmail.com","password")
-# handler.subject("test")
-# handler.content("test content")
-# handler.receiver("dst@dst.com")
-# handler.attach("/root/123.zip")
-# handler.perform()
