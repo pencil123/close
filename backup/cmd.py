@@ -4,6 +4,7 @@ import argparse
 import yaml
 import sys
 import os
+import time
 
 from compress import compress
 from split import split
@@ -19,6 +20,7 @@ class cmd():
 		self.mail_recive = config_info['mail_recive']
 		self.compress = config_info['compress']
 		self.size_bag =self.compress['size_bag']
+		self.gmail =config_info['gmail_send']
 		self.split = split(self.size_bag)
 
 	def codes_backup(self):
@@ -57,13 +59,15 @@ class cmd():
 	def sendmail(self):
 		for key,value in self.message_dict.items():
 			self.mail = SendMailDIY()
-			self.mail.anonymous()
+			self.mail.login_gmail(self.gmail['user'],self.gmail['password'])
 			self.mail.subject(key)
 			self.mail.content(key)
 			self.mail.receiver(self.mail_recive)
 			self.mail.attach(value)
 			self.mail.perform()
+			self.mail.logout()
 			os.remove(value)
+			time.sleep(300)
 
 
 parser = argparse.ArgumentParser(usage=None,description="backup files or databases according to config")

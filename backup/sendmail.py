@@ -17,10 +17,10 @@ class SendMailDIY(object):
 
 	def login_gmail(self,username,password):
 		'''use gmail account'''
-		self.smtp=smtplib.SMTP('smtp.gmail.com',587)
-		#smtp.set_debuglevel(1)
-		self.smtp.ehlo()
-		self.smtp.starttls()
+		self.smtp=smtplib.SMTP_SSL('smtp.163.com',465)
+		#self.smtp.set_debuglevel(1)
+		#self.smtp.ehlo()
+		#self.smtp.starttls()
 		self.mail_from = username
 		try:
 			self.smtp.login(username,password)
@@ -70,4 +70,7 @@ class SendMailDIY(object):
 	def perform(self):
 		'''send mail'''
 		self.smtp.sendmail(self.mail_from,self.mailto,str(self.msg))
+		self.msg = email.mime.multipart.MIMEMultipart()
+	
+	def logout(self):
 		self.smtp.quit()

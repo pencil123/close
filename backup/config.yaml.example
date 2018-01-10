@@ -1,15 +1,18 @@
 mail_recive:
-    - recive1@mail.com
-    - recive2@mail.com
+    - someone@163.com
 
 dir_backup:
-    - {name:discuz_codes,path:/www/discuz}
-    - {name:wordpress_codes,path:/www/wordpress}
-    
+    discuz_codes: /www/close
+    wordpress_codes: /www/close
+
 mysql_backup:
-    - {name:discuz_sql,database:discuz}
-    - {name:wordpress_codes,database:wordpress}
+    discuz_sql: bbs
+    wordpress_sql: bbs
 
 compress:
-    size_bag: 1024k
+    size_bag: 5
+    password: password
+
+gmail_send:
+    user: sendone@mail.com
     password: password
